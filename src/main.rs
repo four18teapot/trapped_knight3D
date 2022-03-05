@@ -57,15 +57,10 @@ fn tour(max_iter: i64) -> Option<i64> {
                 return Some(m);
             }
         };
-
-        if m > max_iter {
-            break;
-        }
-
-        m += 1;
-
-	
-	
+	if m % 1000000 == 0 {
+            println!("{}", m);
+	}
+	m += 1;
     }
 
     return None;
