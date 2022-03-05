@@ -63,8 +63,8 @@ fn tour(max_iter: i64) -> Option<i64> {
 
 	
         if m % 10000 == 0 {
-	   print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
-	   println!("Iteration: {} \t\t At: {} {} {} \t\t ABS: {}", m, current.0, current.1, current.2, (abs(&current) as f32).sqrt());
+	   // print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
+	   // println!("Iteration: {} \t\t At: {} {} {} \t\t ABS: {}", m, current.0, current.1, current.2, (abs(&current) as f32).sqrt());
            // Garbage collection
            let mut exclude:Vec<Vec3D> = Vec::new();
            for sq in tour.iter() {
@@ -92,7 +92,7 @@ fn is_surrounded(sq: &Vec3D, tour: &HashSet<Vec3D>) -> bool {
 }
 
 fn main() {
-    let max_iter = 9999999999;
+    let max_iter = 99999;
     println!("Starting knight tour test with max_iter={}", max_iter);
     match tour(max_iter) {
         Some(m) => println!("Knight stopped at iteration step {}", m),
