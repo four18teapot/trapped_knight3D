@@ -13,16 +13,25 @@ fn abs(a: &Vec3D) -> i32 {
     return (a.0 * a.0 + a.1 * a.1 + a.2 * a.2)
 }
 
-fn jump(a: &Vec3D, tour: &HashSet<Vec3D>) -> Option<Vec3D> {
+fn jump(a: &Vec3D, tour: &mut HashSet<Vec3D>) -> Option<(Vec3D)> {
     let mut next_sq: Vec<Vec3D> = vec![];
-
+    let mut poss_jumps: u8 = 0;
+    
     for m in MOVES {
         let j = add(a, &m);
 
         if !tour.contains(&j) {
             next_sq.push(j);
+	    poss_jumps += 1;
         }
     }
+
+    // If only 1 jump was possible, remove last square from tour since it can't be reached after jump.
+    if poss_jumps == 1 {
+	tour.remove(a);
+    }
+
+    println!("Tour length: {}", tour.len());
 
     if next_sq.is_empty() {
         return None;
@@ -47,7 +56,7 @@ fn tour(max_iter: i64) -> Option<i64> {
 
         tour.insert(current);
 	
-        current = match jump(&current, &tour) {
+        current = match jump(&current, &mut tour) {
             Some(x) => x,
             None => {
                 println!("Knight-Bro im stuck!");
@@ -62,20 +71,7 @@ fn tour(max_iter: i64) -> Option<i64> {
         m += 1;
 
 	
-        if m % 10000 == 0 {
-	   print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
-	   println!("Iteration: {} \t\t At: {} {} {} \t\t ABS: {}", m, current.0, current.1, current.2, (abs(&current) as f32).sqrt());
-           // Garbage collection
-           let mut exclude:Vec<Vec3D> = Vec::new();
-           for sq in tour.iter() {
-               if is_surrounded(sq, &tour) {
-                    exclude.push(*sq);
-               }
-           }
-           for r in exclude.iter() {	        
-               tour.remove(r);
-	   }
-	}
+	
     }
 
     return None;
@@ -92,7 +88,7 @@ fn is_surrounded(sq: &Vec3D, tour: &HashSet<Vec3D>) -> bool {
 }
 
 fn main() {
-    let max_iter = 9999999999;
+    let max_iter = 100000;
     println!("Starting knight tour test with max_iter={}", max_iter);
     match tour(max_iter) {
         Some(m) => println!("Knight stopped at iteration step {}", m),
