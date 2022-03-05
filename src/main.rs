@@ -5,15 +5,11 @@ type Vec3D = (i32, i32, i32);
 
 const MOVES: [Vec3D; 24] = [(2,1,0), (2,-1,0), (-2,1,0), (-2,-1,0), (2,0,1), (2,0,-1), (-2,0,1), (-2,0,-1), (0,2,1), (0,2,-1), (0,-2,1), (0,-2,-1),(0,1,2), (0,1,-2), (0,-1,2), (0,-1,-2),(1,0,2), (1,0,-2), (-1,0,2), (-1,0,-2),(1,2,0), (1,-2,0), (-1,2,0), (-1,-2,0)];
 
-fn add(a: &Vec3D, b: &Vec3D) -> Vec3D {
-    return (a.0 + b.0, a.1 + b.1, a.2 + b.2);
-}
+fn add(a: &Vec3D, b: &Vec3D) -> Vec3D {a.0 + b.0, a.1 + b.1, a.2 + b.2}
 
-fn abs(a: &Vec3D) -> i32 {
-    return (a.0 * a.0 + a.1 * a.1 + a.2 * a.2)
-}
+fn abs(a: &Vec3D) -> i32 {a.0 * a.0 + a.1 * a.1 + a.2 * a.2}
 
-fn jump(a: &Vec3D, tour: &mut HashSet<Vec3D>) -> Option<(Vec3D)> {
+fn jump(a: &Vec3D, tour: &mut HashSet<Vec3D>) -> Option<Vec3D> {
     let mut next_sq: Vec<Vec3D> = vec![];
     let mut poss_jumps: u8 = 0;
     
@@ -86,7 +82,7 @@ fn is_surrounded(sq: &Vec3D, tour: &HashSet<Vec3D>) -> bool {
 }
 
 fn main() {
-    let max_iter = 99999;
+    let max_iter = 900000000;
     println!("Starting knight tour test with max_iter={}", max_iter);
     match tour(max_iter) {
         Some(m) => println!("Knight stopped at iteration step {}", m),
