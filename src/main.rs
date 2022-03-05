@@ -31,8 +31,6 @@ fn jump(a: &Vec3D, tour: &mut HashSet<Vec3D>) -> Option<(Vec3D)> {
 	tour.remove(a);
     }
 
-    println!("Tour length: {}", tour.len());
-
     if next_sq.is_empty() {
         return None;
     }
@@ -88,7 +86,7 @@ fn is_surrounded(sq: &Vec3D, tour: &HashSet<Vec3D>) -> bool {
 }
 
 fn main() {
-    let max_iter = 100000;
+    let max_iter = 99999;
     println!("Starting knight tour test with max_iter={}", max_iter);
     match tour(max_iter) {
         Some(m) => println!("Knight stopped at iteration step {}", m),
